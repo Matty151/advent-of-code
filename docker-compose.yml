@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+
+    web:
+        container_name: advent-of-code-nginx-${APP_ENV}
+        image: nginx:latest
+        build:
+            context: ./docker/nginx
+            args:
+                - UID=${UID:-1000}
+        environment:
+            - NGINX_SERVER_NAME=${APP_SERVER_NAME}
+            - NGINX_PORT=${APP_PORT}
+            - PHP_CONTAINER=advent-of-code-php-${APP_ENV}
+            - PHP_PORT=${PHP_PORT}
+        ports:
+            - "${APP_PORT}:${APP_PORT}"
+        volumes:
+            - .:/var/www/html
+            - ./docker/nginx/templates:/etc/nginx/templates
+        depends_on:
+            - php
+
+    php:
+        container_name: advent-of-code-php-${APP_ENV}
+        image: php:8.1-fpm
+        build:
+            context: ./docker/php
+            args:
+                - UID=${UID:-1000}
+        environment:
+            - PHP_PORT=${PHP_PORT}
+        ports:
+            - "${PHP_PORT}:${PHP_PORT}"
+        volumes:
+            - .:/var/www/html
+            - ./docker/php/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
