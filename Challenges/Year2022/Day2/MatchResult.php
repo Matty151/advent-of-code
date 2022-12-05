@@ -8,7 +8,7 @@ enum MatchResult
     case DRAW;
     case WIN;
 
-    public function calculateScore(): int
+    public function getScore(): int
     {
         return match ($this) {
             MatchResult::LOSS => 0,

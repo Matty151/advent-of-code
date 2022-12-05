@@ -36,6 +36,6 @@ class RockPaperScissorsGame
 
     public function calculateScore(): int
     {
-        return $this->calculateResult()->calculateScore() + $this->firstHand->getScore();
+        return $this->calculateResult()->getScore() + $this->firstHand->getScore();
     }
 }
