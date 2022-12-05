@@ -10,6 +10,33 @@ class Day1
 
     public function run()
     {
+        [
+            $totalCaloriesPerElf,
+            $elfWithMostCalories,
+            $mostCalories,
+        ] = $this->calculateTotals();
+
+        prettyPrintR('Part 1');
+        prettyPrintR("{$elfWithMostCalories} has food items with a total of {$mostCalories} calories.");
+
+        printHr();
+
+        prettyPrintR('Part 2');
+        arsort($totalCaloriesPerElf, SORT_NUMERIC);
+
+        $top3Elves = array_slice($totalCaloriesPerElf, 0, 3);
+
+        foreach ($top3Elves as $elf => $totalCalories) {
+            prettyPrintR("{$elf} has food items with a total of {$totalCalories} calories.");
+        }
+
+        printHr();
+
+        prettyPrintR('Total of top 3: ' . array_sum($top3Elves));
+    }
+
+    private function calculateTotals()
+    {
         $totalCaloriesPerElf = [];
         $elfWithMostCalories = '';
         $mostCalories = 0;
@@ -35,23 +62,11 @@ class Day1
             }
         }
 
-        prettyPrintR('Part 1');
-        prettyPrintR("{$elfWithMostCalories} has food items with a total of {$mostCalories} calories.");
-
-        printHr();
-
-        prettyPrintR('Part 2');
-        arsort($totalCaloriesPerElf, SORT_NUMERIC);
-
-        $top3Elves = array_slice($totalCaloriesPerElf, 0, 3);
-
-        foreach ($top3Elves as $elf => $totalCalories) {
-            prettyPrintR("{$elf} has food items with a total of {$totalCalories} calories.");
-        }
-
-        printHr();
-
-        prettyPrintR('Total of top 3: ' . array_sum($top3Elves));
+        return [
+            $totalCaloriesPerElf,
+            $elfWithMostCalories,
+            $mostCalories,
+        ];
     }
 
     private function getNextElfName(): string
