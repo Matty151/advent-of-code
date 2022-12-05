@@ -8,6 +8,15 @@ enum MatchResult
     case DRAW;
     case WIN;
 
+    public static function createFromString(string $matchResult): MatchResult
+    {
+        return match ($matchResult) {
+            'X' => MatchResult::LOSS,
+            'Y' => MatchResult::DRAW,
+            'Z' => MatchResult::WIN,
+        };
+    }
+
     public function getScore(): int
     {
         return match ($this) {
