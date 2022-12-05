@@ -6,8 +6,6 @@ use Challenges\Libraries\File;
 
 class Day1
 {
-    private int $elfCounter = 0;
-
     public function run()
     {
         $totalCaloriesPerElf = $this->calculateTotals();
@@ -16,16 +14,16 @@ class Day1
         $mostCalories = $totalCaloriesPerElf[$elfWithMostCalories];
 
         prettyPrintR('Part 1');
-        prettyPrintR("{$elfWithMostCalories} has food items with a total of {$mostCalories} calories.");
+        prettyPrintR("Elf {$elfWithMostCalories} has food items with a total of {$mostCalories} calories.");
 
         printHr();
 
         prettyPrintR('Part 2');
 
-        $top3Elves = array_slice($totalCaloriesPerElf, 0, 3);
+        $top3Elves = array_slice($totalCaloriesPerElf, 0, 3, true);
 
         foreach ($top3Elves as $elf => $totalCalories) {
-            prettyPrintR("{$elf} has food items with a total of {$totalCalories} calories.");
+            prettyPrintR("Elf {$elf} has food items with a total of {$totalCalories} calories.");
         }
 
         printHr();
@@ -37,31 +35,24 @@ class Day1
     {
         $totalCaloriesPerElf = [];
 
-        $currentElfName = $this->getNextElfName();
+        $currentElf = 1;
 
         foreach (File::readLine(__DIR__ . '/calories.txt') as $line) {
-            if (!array_key_exists($currentElfName, $totalCaloriesPerElf)) {
-                $totalCaloriesPerElf[$currentElfName] = 0;
+            if (!array_key_exists($currentElf, $totalCaloriesPerElf)) {
+                $totalCaloriesPerElf[$currentElf] = 0;
             }
 
             $calorie = trim($line);
 
             if (!empty($calorie)) {
-                $totalCaloriesPerElf[$currentElfName] += (int)$calorie;
+                $totalCaloriesPerElf[$currentElf] += (int)$calorie;
             } else {
-                $currentElfName = $this->getNextElfName();
+                $currentElf++;
             }
         }
 
         arsort($totalCaloriesPerElf, SORT_NUMERIC);
 
         return $totalCaloriesPerElf;
-    }
-
-    private function getNextElfName(): string
-    {
-        $this->elfCounter++;
-
-        return "Elf {$this->elfCounter}";
     }
 }
