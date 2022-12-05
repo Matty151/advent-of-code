@@ -1,0 +1,63 @@
+<?php
+
+namespace Challenges\Year2022\Day1;
+
+class Day1
+{
+    private int $elfCounter = 0;
+
+    public function run()
+    {
+        $file = fopen(__DIR__ . '/calories.txt', 'r');
+
+        $totalCaloriesPerElf = [];
+        $elfWithMostCalories = '';
+        $mostCalories = 0;
+
+        $currentElfName = $this->getNextElfName();
+
+        while (($line = fgets($file)) !== false) {
+            if (!array_key_exists($currentElfName, $totalCaloriesPerElf)) {
+                $totalCaloriesPerElf[$currentElfName] = 0;
+            }
+
+            $calorie = trim($line);
+
+            if (!empty($calorie)) {
+                $totalCaloriesPerElf[$currentElfName] += (int)$calorie;
+            } else {
+                if ($totalCaloriesPerElf[$currentElfName] > $mostCalories) {
+                    $elfWithMostCalories = $currentElfName;
+                    $mostCalories = $totalCaloriesPerElf[$currentElfName];
+                }
+
+                $currentElfName = $this->getNextElfName();
+            }
+        }
+
+        prettyPrintR('Part 1');
+        prettyPrintR("{$elfWithMostCalories} has food items with a total of {$mostCalories} calories.");
+
+        printHr();
+
+        prettyPrintR('Part 2');
+        arsort($totalCaloriesPerElf, SORT_NUMERIC);
+
+        $top3Elves = array_slice($totalCaloriesPerElf, 0, 3);
+
+        foreach ($top3Elves as $elf => $totalCalories) {
+            prettyPrintR("{$elf} has food items with a total of {$totalCalories} calories.");
+        }
+
+        printHr();
+
+        prettyPrintR('Total of top 3: ' . array_sum($top3Elves));
+    }
+
+    private function getNextElfName(): string
+    {
+        $this->elfCounter++;
+
+        return "Elf {$this->elfCounter}";
+    }
+}
