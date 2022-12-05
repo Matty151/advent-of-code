@@ -2,21 +2,21 @@
 
 namespace Challenges\Year2022\Day1;
 
+use Challenges\Libraries\File;
+
 class Day1
 {
     private int $elfCounter = 0;
 
     public function run()
     {
-        $file = fopen(__DIR__ . '/calories.txt', 'r');
-
         $totalCaloriesPerElf = [];
         $elfWithMostCalories = '';
         $mostCalories = 0;
 
         $currentElfName = $this->getNextElfName();
 
-        while (($line = fgets($file)) !== false) {
+        foreach (File::readLine(__DIR__ . '/calories.txt') as $line) {
             if (!array_key_exists($currentElfName, $totalCaloriesPerElf)) {
                 $totalCaloriesPerElf[$currentElfName] = 0;
             }
