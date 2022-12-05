@@ -10,11 +10,10 @@ class Day1
 
     public function run()
     {
-        [
-            $totalCaloriesPerElf,
-            $elfWithMostCalories,
-            $mostCalories,
-        ] = $this->calculateTotals();
+        $totalCaloriesPerElf = $this->calculateTotals();
+
+        $elfWithMostCalories = array_key_first($totalCaloriesPerElf);
+        $mostCalories = $totalCaloriesPerElf[$elfWithMostCalories];
 
         prettyPrintR('Part 1');
         prettyPrintR("{$elfWithMostCalories} has food items with a total of {$mostCalories} calories.");
@@ -22,7 +21,6 @@ class Day1
         printHr();
 
         prettyPrintR('Part 2');
-        arsort($totalCaloriesPerElf, SORT_NUMERIC);
 
         $top3Elves = array_slice($totalCaloriesPerElf, 0, 3);
 
@@ -38,8 +36,6 @@ class Day1
     private function calculateTotals(): array
     {
         $totalCaloriesPerElf = [];
-        $elfWithMostCalories = '';
-        $mostCalories = 0;
 
         $currentElfName = $this->getNextElfName();
 
@@ -53,20 +49,13 @@ class Day1
             if (!empty($calorie)) {
                 $totalCaloriesPerElf[$currentElfName] += (int)$calorie;
             } else {
-                if ($totalCaloriesPerElf[$currentElfName] > $mostCalories) {
-                    $elfWithMostCalories = $currentElfName;
-                    $mostCalories = $totalCaloriesPerElf[$currentElfName];
-                }
-
                 $currentElfName = $this->getNextElfName();
             }
         }
 
-        return [
-            $totalCaloriesPerElf,
-            $elfWithMostCalories,
-            $mostCalories,
-        ];
+        arsort($totalCaloriesPerElf, SORT_NUMERIC);
+
+        return $totalCaloriesPerElf;
     }
 
     private function getNextElfName(): string
