@@ -61,14 +61,12 @@ class Day3
     {
         $rucksacksPerGroup = [];
 
-        $curGroupIndex = 0;
-
-        for ($i = 0; $i < count($rucksacks); $i++) {
-            if ($i % $elvesPerGroup == 0) {
-                $curGroupIndex++;
+        foreach (range(0, count($rucksacks), $elvesPerGroup) as $i) {
+            if ($i + $elvesPerGroup > count($rucksacks)) {
+                break;
             }
 
-            $rucksacksPerGroup[$curGroupIndex][] = $rucksacks[$i];
+            $rucksacksPerGroup[] = array_slice($rucksacks, $i, $elvesPerGroup);
         }
 
         return $rucksacksPerGroup;
