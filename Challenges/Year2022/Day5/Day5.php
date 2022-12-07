@@ -47,7 +47,7 @@ class Day5
      */
     private function generateProcedures(array $stacks): array
     {
-        $proceduresRaw = File::linesToArray(__DIR__ . '/procedures.txt');
+        $proceduresRaw = File::linesToArray(__DIR__ . '/moves.txt');
 
         $procedures = [];
 
