@@ -9,7 +9,7 @@ class Day5
     public function part1()
     {
         $stacks = $this->createStacks();
-        $procedures = $this->generateProcedures($stacks);
+        $procedures = $this->createMoves($stacks);
         $crateMover = new CrateMover9000($stacks, $procedures);
 
         $crateMover->performMoves();
@@ -45,7 +45,7 @@ class Day5
      * @param Stack[] $stacks
      * @return StackMove[]
      */
-    private function generateProcedures(array $stacks): array
+    private function createMoves(array $stacks): array
     {
         $proceduresRaw = File::linesToArray(__DIR__ . '/moves.txt');
 
