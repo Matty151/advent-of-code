@@ -21,4 +21,4 @@ function printHr()
     echo '<hr/>';
 }
 
-(new \Challenges\Year2022\Day6\Day6())->part1();
+(new \Challenges\Year2022\Day7\Day7())->part1();

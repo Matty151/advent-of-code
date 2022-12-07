@@ -20,7 +20,7 @@ class File
         $file = fopen($path, 'r');
 
         while (($line = fgets($file)) !== false) {
-            yield $line;
+            yield trim($line);
         }
     }
 }
