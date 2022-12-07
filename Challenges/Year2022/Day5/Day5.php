@@ -13,7 +13,7 @@ class Day5
         $crateMover = new CrateMover9000($stacks);
 
         foreach ($moves as $move) {
-            $crateMover->performMove($move);
+            $crateMover->performMove($move[0], $move[1], $move[2]);
         }
 
         $crateValues = array_map(fn($crate) => $crate->value, $crateMover->getTopCratesOfStacks());
@@ -45,7 +45,6 @@ class Day5
 
     /**
      * @param Stack[] $stacks
-     * @return StackMove[]
      */
     private function createMoves(array $stacks): array
     {
@@ -60,11 +59,11 @@ class Day5
 
             $numbers = $numbers[0];
 
-            $procedures[] = new StackMove(
+            $procedures[] = [
                 $stacks[(int)$numbers[1] - 1],
                 $stacks[(int)$numbers[2] - 1],
                 (int)$numbers[0],
-            );
+            ];
         }
 
         return $procedures;

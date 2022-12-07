@@ -15,7 +15,7 @@ abstract class CrateMover
         $this->stacks = $stacks;
     }
 
-    public abstract function performMove(StackMove $move);
+    public abstract function performMove(Stack $from, Stack $to, int $amount);
 
     /**
      * @return Crate[]
