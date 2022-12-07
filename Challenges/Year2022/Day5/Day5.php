@@ -10,13 +10,11 @@ class Day5
     {
         $stacks = $this->createStacks();
         $procedures = $this->generateProcedures($stacks);
+        $crateMover = new CrateMover9000($stacks, $procedures);
 
-        foreach ($procedures as $procedure) {
-            $procedure->performProcedure();
-        }
+        $crateMover->performMoves();
 
-        $topCrates = array_map(fn($stack) => $stack->readFirst(), $stacks);
-        $crateValues = array_map(fn($crate) => $crate->value, $topCrates);
+        $crateValues = array_map(fn($crate) => $crate->value, $crateMover->getTopCratesOfStacks());
 
         var_dump(implode('', $crateValues));
     }
@@ -45,7 +43,7 @@ class Day5
 
     /**
      * @param Stack[] $stacks
-     * @return RearrangementProcedure[]
+     * @return StackMove[]
      */
     private function generateProcedures(array $stacks): array
     {
@@ -60,7 +58,7 @@ class Day5
 
             $numbers = $numbers[0];
 
-            $procedures[] = new RearrangementProcedure(
+            $procedures[] = new StackMove(
                 $stacks[(int)$numbers[1] - 1],
                 $stacks[(int)$numbers[2] - 1],
                 (int)$numbers[0],

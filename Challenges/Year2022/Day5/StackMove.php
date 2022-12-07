@@ -2,7 +2,7 @@
 
 namespace Challenges\Year2022\Day5;
 
-class RearrangementProcedure
+class StackMove
 {
     private Stack $from;
     private Stack $to;
@@ -15,7 +15,7 @@ class RearrangementProcedure
         $this->iterations = $iterations;
     }
 
-    public function performProcedure()
+    public function performMove()
     {
         for ($i = 0; $i < $this->iterations; $i++) {
             $this->to->add($this->from->pop());
