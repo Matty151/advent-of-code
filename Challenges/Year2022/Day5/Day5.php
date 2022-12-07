@@ -10,7 +10,7 @@ class Day5
     {
         $stacks = $this->createStacks();
         $moves = $this->parseMoves($stacks);
-        $crateMover = new CrateMover9000($stacks);
+        $crateMover = new CrateMover9001($stacks);
 
         foreach ($moves as $move) {
             $crateMover->performMove($move[0], $move[1], $move[2]);
