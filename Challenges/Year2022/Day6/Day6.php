@@ -7,19 +7,13 @@ class Day6
     public function part1()
     {
         $signal = file_get_contents(__DIR__ . '/signal.txt');
-//        $signal = 'bvwbjplbgvbhsrlpgdmjqwftvncz';
-//        $signal = 'nppdvjthqldpwncqszvftbrmjlhg';
-//        $signal = 'nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg';
-//        $signal = 'zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw';
 
-        $index = $this->detectStartOfMessageMarker($signal);
-
-        var_dump($index);
+        var_dump($this->detectStartOfMessageMarker($signal, 4));
+        var_dump($this->detectStartOfMessageMarker($signal, 14));
     }
 
-    public function detectStartOfMessageMarker(string $signal): int
+    public function detectStartOfMessageMarker(string $signal, int $packetMarkerSize): int
     {
-        $packetMarkerSize = 4;
         $charBuffer = '';
 
         foreach (str_split($signal) as $index => $char) {
