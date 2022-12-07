@@ -7,20 +7,15 @@ abstract class CrateMover
     /** @var Stack[] */
     protected array $stacks;
 
-    /** @var StackMove[] */
-    protected array $moves;
-
     /**
      * @param Stack[] $stacks
-     * @param StackMove[] $moves
      */
-    public function __construct(array $stacks, array $moves)
+    public function __construct(array $stacks)
     {
         $this->stacks = $stacks;
-        $this->moves = $moves;
     }
 
-    public abstract function performMoves();
+    public abstract function performMove(StackMove $move);
 
     /**
      * @return Crate[]

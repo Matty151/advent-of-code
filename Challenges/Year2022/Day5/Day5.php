@@ -9,10 +9,12 @@ class Day5
     public function part1()
     {
         $stacks = $this->createStacks();
-        $procedures = $this->createMoves($stacks);
-        $crateMover = new CrateMover9000($stacks, $procedures);
+        $moves = $this->createMoves($stacks);
+        $crateMover = new CrateMover9000($stacks);
 
-        $crateMover->performMoves();
+        foreach ($moves as $move) {
+            $crateMover->performMove($move);
+        }
 
         $crateValues = array_map(fn($crate) => $crate->value, $crateMover->getTopCratesOfStacks());
 
