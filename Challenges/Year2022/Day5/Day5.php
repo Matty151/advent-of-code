@@ -26,11 +26,11 @@ class Day5
      */
     private function createStacks(): array
     {
-        $createsPerStack = File::linesToArray(__DIR__ . '/stacks.txt');
+        $cratesPerStack = File::linesToArray(__DIR__ . '/stacks.txt');
 
         $stacks = [];
 
-        foreach ($createsPerStack as $crates) {
+        foreach ($cratesPerStack as $crates) {
             $stack = new Stack();
 
             foreach (explode(',', $crates) as $crate) {
