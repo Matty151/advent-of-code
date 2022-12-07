@@ -9,7 +9,7 @@ class Day5
     public function part1()
     {
         $stacks = $this->createStacks();
-        $moves = $this->createMoves($stacks);
+        $moves = $this->parseMoves($stacks);
         $crateMover = new CrateMover9000($stacks);
 
         foreach ($moves as $move) {
@@ -46,7 +46,7 @@ class Day5
     /**
      * @param Stack[] $stacks
      */
-    private function createMoves(array $stacks): array
+    private function parseMoves(array $stacks): array
     {
         $proceduresRaw = File::linesToArray(__DIR__ . '/moves.txt');
 
