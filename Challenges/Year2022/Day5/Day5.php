@@ -10,6 +10,21 @@ class Day5
     {
         $stacks = $this->createStacks();
         $moves = $this->parseMoves($stacks);
+        $crateMover = new CrateMover9000($stacks);
+
+        foreach ($moves as $move) {
+            $crateMover->performMove($move[0], $move[1], $move[2]);
+        }
+
+        $crateValues = array_map(fn($crate) => $crate->value, $crateMover->getTopCratesOfStacks());
+
+        var_dump(implode('', $crateValues));
+    }
+
+    public function part2()
+    {
+        $stacks = $this->createStacks();
+        $moves = $this->parseMoves($stacks);
         $crateMover = new CrateMover9001($stacks);
 
         foreach ($moves as $move) {
