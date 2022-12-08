@@ -7,6 +7,8 @@ use Challenges\Libraries\File;
 class Day7
 {
     const MAX_DIRECTORY_SIZE = 100000;
+    const AVAILABLE_SIZE = 70000000;
+    const MIN_USED_SPACE_NEEDED_FOR_UPDATE = 30000000;
 
     public function part1()
     {
@@ -27,6 +29,31 @@ class Day7
         }
 
         var_dump($totalSize);
+    }
+
+    public function part2()
+    {
+        $disk = new Directory('c');
+        $this->mountFilesystem($disk);
+
+        $unusedSpace = self::AVAILABLE_SIZE - $disk->getSize();
+        $minSizeToDelete = self::MIN_USED_SPACE_NEEDED_FOR_UPDATE - $unusedSpace;
+
+        $foundSize = 0;
+
+        $iterator = $disk->getDirectory('/')->getBreadthFirstIterator();
+
+        while ($iterator->hasNext()) {
+            $node = $iterator->getNext();
+
+            $size = $node->getSize();
+
+            if ($size >= $minSizeToDelete && ($foundSize == 0 || $size < $foundSize)) {
+                $foundSize = $size;
+            }
+        }
+
+        var_dump($foundSize);
     }
 
     public function mountFilesystem(Directory $disk): Directory
