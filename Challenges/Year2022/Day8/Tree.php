@@ -72,10 +72,37 @@ class Tree
 
     public function calculateScenicScore(): int
     {
-        $scorePerDirection = [];
+        $nrOfVisibleTreesPerDirection = [];
 
+        foreach (TreeNeighbourPosition::cases() as $direction) {
+            $nrOfVisibleTreesPerDirection[$direction->name] = count($this->getVisibleTreesInDirection($direction));
+        }
 
+        return array_product($nrOfVisibleTreesPerDirection);
+    }
 
-        return array_sum($scorePerDirection);
+    public function getVisibleTreesInDirection(TreeNeighbourPosition $direction): array
+    {
+        $neighbour = $this->getNeighbour($direction);
+
+        if (empty($neighbour)) {
+            return [];
+        }
+
+        $visibleTrees = [];
+
+        $iterator = new TraverseSingleDirectionTreeIterator($neighbour, $direction);
+
+        while ($iterator->hasNext()) {
+            $tree = $iterator->getNext();
+
+            $visibleTrees[] = $tree;
+
+            if (!$this->isTallerThan($tree)) {
+                break;
+            }
+        }
+
+        return $visibleTrees;
     }
 }

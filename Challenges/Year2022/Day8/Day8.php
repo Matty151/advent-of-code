@@ -34,6 +34,18 @@ class Day8
     {
         $treeHeights = $this->parseTreeInto2dArray();
         $trees = $this->getTrees($treeHeights);
+
+        $scores = [];
+
+        $iterator = new TreesScanner($trees[0][0]);
+
+        while ($iterator->hasNext()) {
+            $tree = $iterator->getNext();
+
+            $scores[] = $tree->calculateScenicScore();
+        }
+
+        var_dump(max($scores));
     }
 
     private function parseTreeInto2dArray(): array
