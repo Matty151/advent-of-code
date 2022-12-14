@@ -22,21 +22,9 @@ class Knot
         $diff = $this->previous->position->minus($this->position);
 
         if ($diff->getMagnitude() >= 2) {
-            $absX = abs($diff->x);
-            $absY = abs($diff->y);
+            $move = $this->calculateMove($diff, $distance);
 
-            $stepX = sign($diff->x) * $distance;
-            $stepY = sign($diff->y) * $distance;
-
-            if ($absX == $absY && $absX == 2) {
-                $diff->subtract(new Vector2D($stepX, $stepY));
-            } elseif ($absX > $absY) {
-                $diff->x -= $stepX;
-            } else {
-                $diff->y -= $stepY;
-            }
-
-            $this->applyMove($diff);
+            $this->applyMove($move);
 
             if (!empty($this->next)) {
                 $this->next->move($distance);
@@ -56,5 +44,22 @@ class Knot
     private function applyMove(Vector2D $move)
     {
         $this->position->add($move);
+    }
+
+    private function calculateMove(Vector2D $diff, int $distance): Vector2D
+    {
+        $absX = abs($diff->x);
+        $absY = abs($diff->y);
+
+        $stepX = sign($diff->x) * $distance;
+        $stepY = sign($diff->y) * $distance;
+
+        if ($absX == $absY && $absX == 2) {
+            return $diff->minus(new Vector2D($stepX, $stepY));
+        } elseif ($absX > $absY) {
+            return new Vector2D($diff->x - $stepX, $diff->y);
+        } else {
+            return new Vector2D($diff->x, $diff->y - $stepY);
+        }
     }
 }
