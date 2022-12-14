@@ -6,56 +6,38 @@ class Rope
 {
     private const STEP_SIZE = 1;
 
-    private Vector2d $headPosition;
-    private Vector2d $tailPosition;
+    private Knot $head;
 
-    public function __construct(Vector2d $headPosition = new Vector2d(), Vector2d $tailPosition = new Vector2d())
+    public function __construct(Knot $head)
     {
-        $this->headPosition = $headPosition;
-        $this->tailPosition = $tailPosition;
+        $this->head = $head;
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function step(string $direction): void
+    public function move(string $direction)
     {
-        $this->headPosition->add($this->calculateStep($direction));
+        $this->head->position->add($this->calculateStep($direction));
 
-        $diff = $this->headPosition->minus($this->tailPosition);
-
-        if ($diff->getMagnitude() >= 2) {
-            if (abs($diff->x) > abs($diff->y)) {
-                $diff->x -= sign($diff->x);
-            } else {
-                $diff->y -= sign($diff->y);
-            }
-
-            $this->tailPosition->add($diff);
+        if (!empty($this->head->next)) {
+            $this->head->next->move(self::STEP_SIZE);
         }
     }
 
+    public function getTail(): Knot
+    {
+        return $this->head->getTail();
+    }
+
     /**
      * @throws \Exception
      */
-    private function calculateStep(string $direction): Vector2d
+    private function calculateStep(string $direction): Vector2D
     {
         return match ($direction) {
-            'U' => new Vector2d(0, self::STEP_SIZE),
-            'R' => new Vector2d(self::STEP_SIZE, 0),
-            'D' => new Vector2d(0, -self::STEP_SIZE),
-            'L' => new Vector2d(-self::STEP_SIZE, 0),
+            'U' => new Vector2D(0, self::STEP_SIZE),
+            'R' => new Vector2D(self::STEP_SIZE, 0),
+            'D' => new Vector2D(0, -self::STEP_SIZE),
+            'L' => new Vector2D(-self::STEP_SIZE, 0),
             default => throw new \Exception("Direction {$direction} not supported."),
         };
-    }
-
-    public function getHeadPosition(): Vector2d
-    {
-        return $this->headPosition;
-    }
-
-    public function getTailPosition(): Vector2d
-    {
-        return $this->tailPosition;
     }
 }

@@ -8,22 +8,21 @@ class Day9
 {
     public function part1()
     {
-        $moves = $this->parseMoves();
-
-        $rope = new Rope();
+        $rope = $this->createRope();
+        $tail = $rope->getTail();
 
         $visitedPositions = [];
 
-        foreach ($moves as $move) {
+        foreach ($this->parseMoves() as $index => $move) {
             [$direction, $distance] = $move;
 
             foreach (range(1, $distance) as $step) {
-                $rope->step($direction);
+                $rope->move($direction, 1);
 
-                $tailPosition = $rope->getTailPosition();
+                $tailPosition = $tail->position;
 
                 if (!array_key_exists((string)$tailPosition, $visitedPositions)) {
-                    $visitedPositions[(string)$tailPosition] = $rope->getTailPosition();
+                    $visitedPositions[(string)$tailPosition] = $tailPosition;
                 }
             }
         }
@@ -35,10 +34,26 @@ class Day9
     {
         $moves = [];
 
-        foreach (File::readLine(__DIR__ . '/moves_small.txt') as $move) {
+        foreach (File::readLine(__DIR__ . '/moves.txt') as $move) {
             $moves[] = explode(' ', $move);
         }
 
         return $moves;
+    }
+
+    private function createRope(): Rope
+    {
+        $head = new Knot('head');
+
+        $prevKnot = $head;
+
+        foreach (range(1, 9) as $index) {
+            $knot = new Knot("Knot-{$index}", $prevKnot);
+            $prevKnot->next = $knot;
+
+            $prevKnot = $knot;
+        }
+
+        return new Rope($head);
     }
 }

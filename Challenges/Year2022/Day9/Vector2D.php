@@ -4,7 +4,7 @@ namespace Challenges\Year2022\Day9;
 
 use JetBrains\PhpStorm\Pure;
 
-class Vector2d
+class Vector2D
 {
     public int $x = 0;
     public int $y = 0;
@@ -16,12 +16,12 @@ class Vector2d
     }
 
     #[Pure]
-    public function plus(Vector2d $other): Vector2d
+    public function plus(Vector2D $other): Vector2D
     {
-        return new Vector2d($this->x + $other->x, $this->y + $other->y);
+        return new Vector2D($this->x + $other->x, $this->y + $other->y);
     }
 
-    public function add(Vector2d $other): Vector2d
+    public function add(Vector2D $other): Vector2D
     {
         $this->x += $other->x;
         $this->y += $other->y;
@@ -30,12 +30,12 @@ class Vector2d
     }
 
     #[Pure]
-    public function minus(Vector2d $other): Vector2d
+    public function minus(Vector2D $other): Vector2D
     {
-        return (new Vector2d($this->x - $other->x, $this->y - $other->y));
+        return (new Vector2D($this->x - $other->x, $this->y - $other->y));
     }
 
-    public function subtract(Vector2d $other): Vector2d
+    public function subtract(Vector2D $other): Vector2D
     {
         $this->x -= $other->x;
         $this->y -= $other->y;
@@ -50,9 +50,9 @@ class Vector2d
     }
 
     #[Pure]
-    public function getAbsolute(): Vector2d
+    public function getAbsolute(): Vector2D
     {
-        return new Vector2d(abs($this->x), abs($this->y));
+        return new Vector2D(abs($this->x), abs($this->y));
     }
 
     public function __toString(): string
