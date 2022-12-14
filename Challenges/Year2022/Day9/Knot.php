@@ -41,11 +41,6 @@ class Knot
         return $this->next->getTail();
     }
 
-    private function applyMove(Vector2D $move)
-    {
-        $this->position->add($move);
-    }
-
     private function calculateMove(Vector2D $diff, int $distance): Vector2D
     {
         $absX = abs($diff->x);
@@ -61,5 +56,10 @@ class Knot
         } else {
             return new Vector2D($diff->x, $diff->y - $stepY);
         }
+    }
+
+    private function applyMove(Vector2D $move)
+    {
+        $this->position->add($move);
     }
 }
