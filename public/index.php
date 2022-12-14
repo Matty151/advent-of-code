@@ -2,23 +2,4 @@
 
 require_once '../vendor/autoload.php';
 
-function prettyPrint($data)
-{
-    echo '<pre>';
-    var_dump($data);
-    echo '</pre>';
-}
-
-function prettyPrintR($data)
-{
-    echo '<pre>';
-    print_r($data);
-    echo '</pre>';
-}
-
-function printHr()
-{
-    echo '<hr/>';
-}
-
-(new \Challenges\Year2022\Day8\Day8())->part2();
+(new \Challenges\Year2022\Day9\Day9())->part1();

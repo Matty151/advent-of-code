@@ -13,22 +13,18 @@ class Day1
         $elfWithMostCalories = array_key_first($totalCaloriesPerElf);
         $mostCalories = $totalCaloriesPerElf[$elfWithMostCalories];
 
-        prettyPrintR('Part 1');
-        prettyPrintR("Elf {$elfWithMostCalories} has food items with a total of {$mostCalories} calories.");
+        var_dump('Part 1');
+        var_dump("Elf {$elfWithMostCalories} has food items with a total of {$mostCalories} calories.");
 
-        printHr();
-
-        prettyPrintR('Part 2');
+        var_dump('Part 2');
 
         $top3Elves = array_slice($totalCaloriesPerElf, 0, 3, true);
 
         foreach ($top3Elves as $elf => $totalCalories) {
-            prettyPrintR("Elf {$elf} has food items with a total of {$totalCalories} calories.");
+            var_dump("Elf {$elf} has food items with a total of {$totalCalories} calories.");
         }
 
-        printHr();
-
-        prettyPrintR('Total of top 3: ' . array_sum($top3Elves));
+        var_dump('Total of top 3: ' . array_sum($top3Elves));
     }
 
     private function calculateTotals(): array

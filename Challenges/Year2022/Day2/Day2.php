@@ -12,8 +12,6 @@ class Day2
 
         $this->part1($strategies);
 
-        printHr();
-
         $this->part2($strategies);
     }
 
@@ -36,7 +34,7 @@ class Day2
             ];
         }
 
-        prettyPrintR(array_sum(array_column($games, 'points')));
+        var_dump(array_sum(array_column($games, 'points')));
     }
 
     private function part2(array $strategies)
@@ -59,6 +57,6 @@ class Day2
             ];
         }
 
-        prettyPrintR(array_sum(array_column($games, 'points')));
+        var_dump(array_sum(array_column($games, 'points')));
     }
 }
