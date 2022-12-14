@@ -8,14 +8,14 @@ class Day9
 {
     public function part1()
     {
-        $moves = File::linesToArray(__DIR__ . '/moves.txt');
+        $moves = $this->parseMoves();
 
         $rope = new Rope();
 
         $visitedPositions = [];
 
         foreach ($moves as $move) {
-            [$direction, $distance] = explode(' ', $move);
+            [$direction, $distance] = $move;
 
             foreach (range(1, $distance) as $step) {
                 $rope->step($direction);
@@ -29,5 +29,16 @@ class Day9
         }
 
         var_dump(count($visitedPositions));
+    }
+
+    private function parseMoves(): array
+    {
+        $moves = [];
+
+        foreach (File::readLine(__DIR__ . '/moves_small.txt') as $move) {
+            $moves[] = explode(' ', $move);
+        }
+
+        return $moves;
     }
 }
