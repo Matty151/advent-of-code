@@ -22,9 +22,7 @@ class Knot
         $diff = $this->previous->position->minus($this->position);
 
         if ($diff->getMagnitude() >= 2) {
-            $move = $this->calculateMove($diff, $distance);
-
-            $this->applyMove($move);
+            $this->applyMove($this->calculateMove($diff, $distance));
 
             if (!empty($this->next)) {
                 $this->next->move($distance);
