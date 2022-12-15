@@ -7,14 +7,19 @@ use SplStack;
 
 class CPU6502
 {
+    /** @var Module[] */
+    private array $modules;
+
     private SplStack $xRegister;
     private SplStack $accumulator;
     private SplQueue $commands;
 
     private int $cycle = 1;
 
-    public function __construct(array $commands)
+    public function __construct(array $commands, array $modules = [])
     {
+        $this->modules = $modules;
+
         $this->xRegister = new SplStack();
         $this->xRegister->push(1);
 
@@ -34,13 +39,15 @@ class CPU6502
                 $this->commands->enqueue(new Command('noop'));
             }
         }
-
-        var_dump("Nr of ops: {$this->commands->count()}");
     }
 
     public function step(): void
     {
         $command = $this->commands->dequeue();
+
+        foreach ($this->modules as $module) {
+            $module->startOfCycle($this);
+        }
 
         switch ($command->operation) {
             case 'ldx':
@@ -60,6 +67,10 @@ class CPU6502
             case 'noop':
             default:
                 break;
+        }
+
+        foreach ($this->modules as $module) {
+            $module->endOfCycle($this);
         }
 
         $this->cycle++;
