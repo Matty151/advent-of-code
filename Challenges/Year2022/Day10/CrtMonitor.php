@@ -12,7 +12,7 @@ class CrtMonitor implements Module
 
     private array $pixels = [];
 
-    public function startOfCycle(CPU6502 $cpu): void
+    public function startCycleHook(CPU6502 $cpu): void
     {
         $pixel = '.';
 
@@ -30,7 +30,7 @@ class CrtMonitor implements Module
         }
     }
 
-    public function endOfCycle(CPU6502 $cpu): void
+    public function endCycleHook(CPU6502 $cpu): void
     {
         $this->imageCenterPos = $cpu->getX();
     }

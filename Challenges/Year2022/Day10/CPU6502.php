@@ -45,9 +45,7 @@ class CPU6502
     {
         $command = $this->commands->dequeue();
 
-        foreach ($this->modules as $module) {
-            $module->startOfCycle($this);
-        }
+        $this->modulesStartCycle();
 
         switch ($command->operation) {
             case 'ldx':
@@ -69,9 +67,7 @@ class CPU6502
                 break;
         }
 
-        foreach ($this->modules as $module) {
-            $module->endOfCycle($this);
-        }
+        $this->modulesEndCycle();
 
         $this->cycle++;
     }
@@ -89,5 +85,19 @@ class CPU6502
     public function hasCommands(): bool
     {
         return !$this->commands->isEmpty();
+    }
+
+    private function modulesStartCycle(): void
+    {
+        foreach ($this->modules as $module) {
+            $module->startCycleHook($this);
+        }
+    }
+
+    private function modulesEndCycle(): void
+    {
+        foreach ($this->modules as $module) {
+            $module->endCycleHook($this);
+        }
     }
 }
