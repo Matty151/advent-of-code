@@ -19,12 +19,10 @@ class Day10
 
             $cycle = $cpu->getCycle();
 
-            if ($cycle >= 20) {
-                if ($cycle == 20 || ($cycle - 20) % 40 == 0) {
-                    var_dump("{$cycle}: {$cpu->getX()}");
+            if ($cycle == 20 || ($cycle - 20) % 40 == 0) {
+                var_dump("{$cycle}: {$cpu->getX()}");
 
-                    $signalStrengths[] = $cycle * $cpu->getX();
-                }
+                $signalStrengths[] = $cycle * $cpu->getX();
             }
         }
 
