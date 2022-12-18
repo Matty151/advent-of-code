@@ -10,4 +10,9 @@ abstract class WorryLevelOperation
     {
         $this->factor = $factor;
     }
+
+    public function getFactor(): int
+    {
+        return $this->factor;
+    }
 }

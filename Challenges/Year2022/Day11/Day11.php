@@ -16,14 +16,17 @@ class Day11
     {
         $monkeys = $this->parseMonkeys();
 
+        $commonDivider = array_product(array_map(fn($monkey) => $monkey->getTestOperation()->getFactor(), $monkeys));
+
         $inspections = [];
 
         foreach (range(1, self::NUMBER_OF_ROUNDS) as $round) {
             foreach ($monkeys as $monkeyIndex => $monkey) {
                 foreach ($monkey->getItems() as $item) {
                     $monkey->inspectItem($item);
-                    $item->applyRelief();
+//                    $item->setWorryLevel(floor($item->getWorryLevel() / 3)); // Comment out for part 2
                     $monkey->testAndThrowItem($item);
+                    $item->setWorryLevel($item->getWorryLevel() % $commonDivider); // Uncomment for part 2
 
                     if (!array_key_exists($monkeyIndex, $inspections)) {
                         $inspections[$monkeyIndex] = 0;
@@ -46,7 +49,7 @@ class Day11
      */
     private function parseMonkeys(): array
     {
-        $monkeyLines = File::linesToArray(__DIR__ . '/monkeys_example.txt');
+        $monkeyLines = File::linesToArray(__DIR__ . '/monkeys.txt');
 
         $monkeys = [];
 
