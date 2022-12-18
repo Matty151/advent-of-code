@@ -10,15 +10,13 @@ use Exception;
 class Day11
 {
     const LINES_PER_MONKEY = 7;
-    const NUMBER_OF_ROUNDS = 10000;
+    const NUMBER_OF_ROUNDS = 10000; // Set to 10000 for part 2
 
     public function part1()
     {
         $monkeys = $this->parseMonkeys();
 
         $commonDivider = array_product(array_map(fn($monkey) => $monkey->getTestOperation()->getFactor(), $monkeys));
-
-        $inspections = [];
 
         foreach (range(1, self::NUMBER_OF_ROUNDS) as $round) {
             foreach ($monkeys as $monkeyIndex => $monkey) {
@@ -27,15 +25,11 @@ class Day11
 //                    $item->setWorryLevel(floor($item->getWorryLevel() / 3)); // Comment out for part 2
                     $monkey->testAndThrowItem($item);
                     $item->setWorryLevel($item->getWorryLevel() % $commonDivider); // Uncomment for part 2
-
-                    if (!array_key_exists($monkeyIndex, $inspections)) {
-                        $inspections[$monkeyIndex] = 0;
-                    }
-
-                    $inspections[$monkeyIndex]++;
                 }
             }
         }
+
+        $inspections = array_map(fn($monkey) => $monkey->getNrOfInspections(), $monkeys);
 
         rsort($inspections, SORT_NUMERIC);
 

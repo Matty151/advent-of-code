@@ -15,6 +15,8 @@ class Monkey
     private Monkey $monkeyIfTrue;
     private Monkey $monkeyIfFalse;
 
+    private int $nrOfInspections = 0;
+
     public function __construct(string $name)
     {
         $this->name = $name;
@@ -25,6 +27,8 @@ class Monkey
         $newWorryLevel = $this->operation->execute($item->getWorryLevel());
 
         $item->setWorryLevel($newWorryLevel);
+
+        $this->nrOfInspections++;
     }
 
     public function testAndThrowItem(BackpackItem $item): void
@@ -97,6 +101,11 @@ class Monkey
     public function setMonkeyIfFalse(Monkey $monkeyIfFalse): void
     {
         $this->monkeyIfFalse = $monkeyIfFalse;
+    }
+
+    public function getNrOfInspections(): int
+    {
+        return $this->nrOfInspections;
     }
 
     public function __toString(): string
