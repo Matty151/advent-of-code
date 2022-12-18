@@ -3,5 +3,8 @@
         "psr-4": {
             "Challenges\\": "Challenges"
         }
+    },
+    "require": {
+        "ext-bcmath": "*"
     }
 }
