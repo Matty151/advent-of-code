@@ -11,6 +11,11 @@ class BackpackItem
         $this->worryLevel = $worryLevel;
     }
 
+    public function applyRelief(): void
+    {
+        $this->worryLevel = floor($this->worryLevel / 3);
+    }
+
     public function getWorryLevel(): int
     {
         return $this->worryLevel;

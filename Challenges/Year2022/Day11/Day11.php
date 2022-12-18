@@ -10,7 +10,7 @@ use Exception;
 class Day11
 {
     const LINES_PER_MONKEY = 7;
-    const NUMBER_OF_ROUNDS = 20;
+    const NUMBER_OF_ROUNDS = 10000;
 
     public function part1()
     {
@@ -22,6 +22,7 @@ class Day11
             foreach ($monkeys as $monkeyIndex => $monkey) {
                 foreach ($monkey->getItems() as $item) {
                     $monkey->inspectItem($item);
+                    $item->applyRelief();
                     $monkey->testAndThrowItem($item);
 
                     if (!array_key_exists($monkeyIndex, $inspections)) {

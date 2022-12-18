@@ -23,14 +23,8 @@ class Monkey
     public function inspectItem(BackpackItem $item): void
     {
         $newWorryLevel = $this->operation->execute($item->getWorryLevel());
-        $newWorryLevel = $this->applyRelief($newWorryLevel);
 
         $item->setWorryLevel($newWorryLevel);
-    }
-
-    private function applyRelief(int $worryLevel): int
-    {
-        return floor($worryLevel / 3);
     }
 
     public function testAndThrowItem(BackpackItem $item): void
